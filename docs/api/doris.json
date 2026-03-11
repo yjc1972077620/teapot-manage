@@ -1,0 +1,852 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "doris类型映射关系",
+    "description": "doris类型映射关系"
+  },
+  "host": "cloud.rj-info.com",
+  "basePath": "/teapot",
+  "paths": {
+    "/doris/tableItem/insert": {
+      "post": {
+        "operationId": "insertTableItem",
+        "summary": "批量新增表结构信息",
+        "description": "",
+        "tags": [
+          "doris类型映射关系"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.adapter.doris.controller.request.DorisTableItemRequest",
+              "$ref": "#/definitions/com.ruijing.sync.adapter.doris.controller.request.DorisTableItemRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.adapter.doris.mapping.entity.DorisTableItem>>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.adapter.doris.mapping.entity.DorisTableItem"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/doris/tableItem/update": {
+      "post": {
+        "operationId": "updateTableItem",
+        "summary": "更新表结构信息",
+        "description": "",
+        "tags": [
+          "doris类型映射关系"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.adapter.doris.controller.request.DorisTableItemUpdateRequest",
+              "$ref": "#/definitions/com.ruijing.sync.adapter.doris.controller.request.DorisTableItemUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/doris/tableItem/delete": {
+      "post": {
+        "operationId": "deleteTableItem",
+        "summary": "批量删除表结构信息",
+        "description": "",
+        "tags": [
+          "doris类型映射关系"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.IdsParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.IdsParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/doris/columnItem/insert": {
+      "post": {
+        "operationId": "insertColumnItem",
+        "summary": "批量新增列映射信息",
+        "description": "",
+        "tags": [
+          "doris类型映射关系"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.adapter.doris.controller.request.DorisColumnItemRequest",
+              "$ref": "#/definitions/com.ruijing.sync.adapter.doris.controller.request.DorisColumnItemRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.adapter.doris.mapping.entity.DorisColumnItem>>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.adapter.doris.mapping.entity.DorisColumnItem"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/doris/columnItem/update": {
+      "post": {
+        "operationId": "updateColumnItem",
+        "summary": "批量更新列映射信息",
+        "description": "",
+        "tags": [
+          "doris类型映射关系"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.adapter.doris.controller.request.DorisColumnItemUpdateRequest",
+              "$ref": "#/definitions/com.ruijing.sync.adapter.doris.controller.request.DorisColumnItemUpdateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/doris/columnItem/delete": {
+      "post": {
+        "operationId": "deleteColumnItem",
+        "summary": "删除列映射信息",
+        "description": "",
+        "tags": [
+          "doris类型映射关系"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.IdsParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.IdsParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/doris/columnItem/mappingAll": {
+      "post": {
+        "operationId": "getMappingAllColumnItem",
+        "summary": "获取mappingAll列映射信息",
+        "description": "",
+        "tags": [
+          "doris类型映射关系"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.MappingColumnParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.MappingColumnParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.adapter.core.mapping.ColumnMappingInfo>>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.adapter.core.mapping.ColumnMappingInfo"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    }
+  },
+  "definitions": {
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.adapter.doris.mapping.entity.DorisTableItem": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "originalRef": "com.ruijing.sync.adapter.doris.mapping.entity.DorisTableItem",
+            "$ref": "#/definitions/com.ruijing.sync.adapter.doris.mapping.entity.DorisTableItem"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "object",
+          "description": "返回结果数据"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.mapping.entity.DorisColumnItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "tableItemId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "该列所属表映射信息id"
+        },
+        "srcColumnName": {
+          "type": "string",
+          "description": "源表字段名"
+        },
+        "srcDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "源端字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "targetColumnName": {
+          "type": "string",
+          "description": "映射到目标字段名"
+        },
+        "targetDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "目标字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "needData": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否需要该数据"
+        },
+        "foreignKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主表外键"
+        },
+        "mainTableFk": {
+          "type": "string",
+          "description": "子表对应主表外键列名"
+        },
+        "primaryKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主键"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.mapping.entity.DorisTableItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "instanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "mappingId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "表映射对应的mapping信息id"
+        },
+        "srcDsId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "表所属数据源id"
+        },
+        "tableName": {
+          "type": "string",
+          "description": "tableName"
+        },
+        "tableNameRegex": {
+          "type": "string",
+          "description": "表名正则（表被水平拆分时）"
+        },
+        "shardedCount": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "水平分表的分片数"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "dbName"
+        },
+        "topic": {
+          "type": "string",
+          "description": "表对应的topic(topic未指定默认取库名_表名)"
+        },
+        "primaryKey": {
+          "type": "string",
+          "description": "当前表主键，用于构造update语句"
+        },
+        "master": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否主表"
+        },
+        "otherCondition": {
+          "type": "string",
+          "description": "查询从表数据时,除了关联主表外键,还有额外的查询条件"
+        },
+        "updateTimeColumnName": {
+          "type": "string",
+          "description": "标识更新时间的字段名"
+        },
+        "columnItemList": {
+          "type": "array",
+          "description": "表字段映射关系",
+          "items": {
+            "originalRef": "com.ruijing.sync.adapter.doris.mapping.entity.DorisColumnItem",
+            "$ref": "#/definitions/com.ruijing.sync.adapter.doris.mapping.entity.DorisColumnItem"
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        },
+        "dorisTableName": {
+          "type": "string",
+          "description": "doris表名"
+        },
+        "dorisDbName": {
+          "type": "string",
+          "description": "doris数据库名"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.controller.param.DorisTableItemParam": {
+      "type": "object",
+      "properties": {
+        "srcDsId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "表所属数据源id"
+        },
+        "tableName": {
+          "type": "string",
+          "description": "tableName"
+        },
+        "tableNameRegex": {
+          "type": "string",
+          "description": "表名正则（表被水平拆分时）"
+        },
+        "shardedCount": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "水平分表的分片数"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "dbName"
+        },
+        "topic": {
+          "type": "string",
+          "description": "表对应的topic(topic未指定默认取表名)"
+        },
+        "primaryKey": {
+          "type": "string",
+          "description": "当前表主键，用于构造update语句"
+        },
+        "master": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否主表"
+        },
+        "otherCondition": {
+          "type": "string",
+          "description": "查询从表数据时,除了关联主表外键,还有额外的查询条件"
+        },
+        "updateTimeColumnName": {
+          "type": "string",
+          "description": "标识更新时间的字段名"
+        },
+        "dorisTableName": {
+          "type": "string",
+          "description": "doris表名"
+        },
+        "dorisDbName": {
+          "type": "string",
+          "description": "doris数据库名"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.controller.request.DorisTableItemRequest": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属实例id"
+        },
+        "mappingId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属映射关系id"
+        },
+        "tableItemList": {
+          "type": "array",
+          "description": "表映射关系",
+          "items": {
+            "originalRef": "com.ruijing.sync.adapter.doris.controller.param.DorisTableItemParam",
+            "$ref": "#/definitions/com.ruijing.sync.adapter.doris.controller.param.DorisTableItemParam"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "返回结果数据"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.controller.param.DorisTableItemUpdateParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "srcDsId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "表所属数据源id"
+        },
+        "tableName": {
+          "type": "string",
+          "description": "tableName"
+        },
+        "tableNameRegex": {
+          "type": "string",
+          "description": "表名正则（表被水平拆分时）"
+        },
+        "shardedCount": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "水平分表的分片数"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "dbName"
+        },
+        "topic": {
+          "type": "string",
+          "description": "表对应的topic(topic未指定默认取表名)"
+        },
+        "primaryKey": {
+          "type": "string",
+          "description": "当前表主键，用于构造update语句"
+        },
+        "master": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否主表"
+        },
+        "otherCondition": {
+          "type": "string",
+          "description": "查询从表数据时,除了关联主表外键,还有额外的查询条件"
+        },
+        "updateTimeColumnName": {
+          "type": "string",
+          "description": "标识更新时间的字段名"
+        },
+        "dorisTableName": {
+          "type": "string",
+          "description": "doris表名"
+        },
+        "dorisDbName": {
+          "type": "string",
+          "description": "doris数据库名"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.controller.request.DorisTableItemUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "tableItemList": {
+          "type": "array",
+          "description": "表映射关系",
+          "items": {
+            "originalRef": "com.ruijing.sync.adapter.doris.controller.param.DorisTableItemUpdateParam",
+            "$ref": "#/definitions/com.ruijing.sync.adapter.doris.controller.param.DorisTableItemUpdateParam"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.IdsParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.adapter.doris.mapping.entity.DorisColumnItem": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "originalRef": "com.ruijing.sync.adapter.doris.mapping.entity.DorisColumnItem",
+            "$ref": "#/definitions/com.ruijing.sync.adapter.doris.mapping.entity.DorisColumnItem"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.controller.param.DorisColumnItemParam": {
+      "type": "object",
+      "properties": {
+        "srcColumnName": {
+          "type": "string",
+          "description": "源表字段名"
+        },
+        "srcDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "源端字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "targetColumnName": {
+          "type": "string",
+          "description": "映射到目标字段名"
+        },
+        "targetDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "目标字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "needData": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否需要该数据"
+        },
+        "foreignKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主表外键"
+        },
+        "mainTableFk": {
+          "type": "string",
+          "description": "子表对应主表外键列名"
+        },
+        "primaryKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主键"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.controller.request.DorisColumnItemRequest": {
+      "type": "object",
+      "properties": {
+        "tableItemId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属表id"
+        },
+        "columnItemList": {
+          "type": "array",
+          "description": "列映射信息",
+          "items": {
+            "originalRef": "com.ruijing.sync.adapter.doris.controller.param.DorisColumnItemParam",
+            "$ref": "#/definitions/com.ruijing.sync.adapter.doris.controller.param.DorisColumnItemParam"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.controller.param.DorisColumnItemUpdateParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "srcColumnName": {
+          "type": "string",
+          "description": "源表字段名"
+        },
+        "srcDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "源端字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "targetColumnName": {
+          "type": "string",
+          "description": "映射到目标字段名"
+        },
+        "targetDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "目标字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "needData": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否需要该数据"
+        },
+        "foreignKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主表外键"
+        },
+        "mainTableFk": {
+          "type": "string",
+          "description": "子表对应主表外键列名"
+        },
+        "primaryKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主键"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.doris.controller.request.DorisColumnItemUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "columnItemList": {
+          "type": "array",
+          "description": "列映射信息",
+          "items": {
+            "originalRef": "com.ruijing.sync.adapter.doris.controller.param.DorisColumnItemUpdateParam",
+            "$ref": "#/definitions/com.ruijing.sync.adapter.doris.controller.param.DorisColumnItemUpdateParam"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.adapter.core.mapping.ColumnMappingInfo": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "originalRef": "com.ruijing.sync.adapter.core.mapping.ColumnMappingInfo",
+            "$ref": "#/definitions/com.ruijing.sync.adapter.core.mapping.ColumnMappingInfo"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.core.mapping.ColumnMappingInfo": {
+      "type": "object",
+      "properties": {
+        "srcColumnName": {
+          "type": "string",
+          "description": "源表字段名"
+        },
+        "srcDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "源端字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "targetColumnName": {
+          "type": "string",
+          "description": "映射到目标字段名"
+        },
+        "targetDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "目标字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.MappingColumnParam": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string",
+          "description": "表名"
+        },
+        "dsInfoId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "数据源id"
+        }
+      },
+      "description": ""
+    }
+  },
+  "apiModels": {
+    "com.ruijing.sync.adapter.doris.controller.DorisMappingController": {
+      "canonicalName": "com.ruijing.sync.adapter.doris.controller.DorisMappingController",
+      "value": "doris类型映射关系",
+      "description": "doris类型映射关系"
+    }
+  },
+  "schemes": [
+    "http"
+  ]
+}

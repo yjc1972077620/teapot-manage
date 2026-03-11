@@ -1,0 +1,2117 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "msharp_teapot_crud",
+    "description": "msharp_teapot_crud"
+  },
+  "host": "cloud.rj-info.com",
+  "basePath": "/teapot",
+  "paths": {
+    "/syncInstance/update": {
+      "post": {
+        "operationId": "update",
+        "summary": "更新SyncInstance",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.SyncInstanceUpdateParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceUpdateParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/syncInstance/insert": {
+      "post": {
+        "operationId": "insert",
+        "summary": "新增SyncInstance",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.SyncInstanceParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.SyncInstanceVO>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.SyncInstanceVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/syncInstance/delete": {
+      "post": {
+        "operationId": "delete",
+        "summary": "删除SyncInstance",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.DeleteParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.DeleteParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/syncInstance/copy": {
+      "post": {
+        "operationId": "copy",
+        "summary": "复制SyncInstance到指定环境",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.SyncInstanceCopyParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceCopyParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.SyncInstanceVO>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.SyncInstanceVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/syncInstance/publish": {
+      "post": {
+        "operationId": "publish",
+        "summary": "SyncInstance发布",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.IdsParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.IdsParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.SyncInstancePublishVO>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.SyncInstancePublishVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/syncInstance/getSyncInstance": {
+      "post": {
+        "operationId": "queryById",
+        "summary": "id 查询SyncInstance",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.query.SyncInstanceQuery",
+              "$ref": "#/definitions/com.ruijing.sync.common.query.SyncInstanceQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.SyncInstanceVO>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.SyncInstanceVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/syncInstance/log/config": {
+      "post": {
+        "operationId": "logConfig",
+        "summary": "SyncInstance日志启停",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.SyncInstanceLogConfigParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceLogConfigParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/syncInstance/status": {
+      "post": {
+        "operationId": "changeStatus",
+        "summary": "SyncInstance启停",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.SyncInstanceStatusParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceStatusParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/syncInstance/page": {
+      "post": {
+        "operationId": "queryByPage",
+        "summary": "SyncInstance 分页查询",
+        "description": "",
+        "tags": [
+          "同步任务实例表SyncInstance管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "pageQuery",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.query.SyncInstancePageQuery",
+              "$ref": "#/definitions/com.ruijing.sync.common.query.SyncInstancePageQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.PageableResponse<java.util.List<com.ruijing.sync.common.vo.SyncInstancePageVO>>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.PageableResponsejava.util.Listcom.ruijing.sync.common.vo.SyncInstancePageVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etlSyncLog/update": {
+      "post": {
+        "operationId": "update",
+        "summary": "更新EtlSyncLog",
+        "description": "",
+        "tags": [
+          "全量同步日志EtlSyncLog管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.EtlSyncLogParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.EtlSyncLogParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etlSyncLog/insert": {
+      "post": {
+        "operationId": "insert",
+        "summary": "新增EtlSyncLog",
+        "description": "",
+        "tags": [
+          "全量同步日志EtlSyncLog管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.EtlSyncLogParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.EtlSyncLogParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etlSyncLog/delete": {
+      "post": {
+        "operationId": "delete",
+        "summary": "删除EtlSyncLog",
+        "description": "",
+        "tags": [
+          "全量同步日志EtlSyncLog管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.DeleteParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.DeleteParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etlSyncLog/getEtlSyncLog": {
+      "post": {
+        "operationId": "queryById",
+        "summary": "id 查询EtlSyncLog",
+        "description": "",
+        "tags": [
+          "全量同步日志EtlSyncLog管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.query.EtlSyncLogQuery",
+              "$ref": "#/definitions/com.ruijing.sync.common.query.EtlSyncLogQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.EtlSyncLogVO>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.EtlSyncLogVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etlSyncLog/page": {
+      "post": {
+        "operationId": "queryByPage",
+        "summary": "EtlSyncLog 分页查询",
+        "description": "",
+        "tags": [
+          "全量同步日志EtlSyncLog管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "pageQuery",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.query.EtlSyncLogPageQuery",
+              "$ref": "#/definitions/com.ruijing.sync.common.query.EtlSyncLogPageQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.PageableResponse<java.util.List<com.ruijing.sync.common.vo.EtlSyncLogVO>>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.PageableResponsejava.util.Listcom.ruijing.sync.common.vo.EtlSyncLogVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dsInfo/update": {
+      "post": {
+        "operationId": "update",
+        "summary": "更新DsInfo",
+        "description": "",
+        "tags": [
+          "数据源信息表DsInfo管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.DsInfoParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.DsInfoParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dsInfo/insert": {
+      "post": {
+        "operationId": "insert",
+        "summary": "新增DsInfo",
+        "description": "",
+        "tags": [
+          "数据源信息表DsInfo管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.DsInfoParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.DsInfoParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.DsInfoVO>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.DsInfoVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dsInfo/delete": {
+      "post": {
+        "operationId": "delete",
+        "summary": "删除DsInfo",
+        "description": "",
+        "tags": [
+          "数据源信息表DsInfo管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.DeleteParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.DeleteParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dsInfo/getDsInfo": {
+      "post": {
+        "operationId": "detail",
+        "summary": "id 查询DsInfo",
+        "description": "",
+        "tags": [
+          "数据源信息表DsInfo管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.query.DsInfoQuery",
+              "$ref": "#/definitions/com.ruijing.sync.common.query.DsInfoQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.DsInfoVO>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.DsInfoVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dsInfo/queryById": {
+      "post": {
+        "operationId": "queryById",
+        "summary": "查询数据源信息",
+        "description": "",
+        "tags": [
+          "数据源信息表DsInfo管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.query.DsInfoQuery",
+              "$ref": "#/definitions/com.ruijing.sync.common.query.DsInfoQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.DsInfoVO>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.DsInfoVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dsInfo/connectCheck": {
+      "post": {
+        "operationId": "connectCheck",
+        "summary": "数据源连通性校验",
+        "description": "",
+        "tags": [
+          "数据源信息表DsInfo管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "query",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.query.DsInfoQuery",
+              "$ref": "#/definitions/com.ruijing.sync.common.query.DsInfoQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dsInfo/tableNames": {
+      "post": {
+        "operationId": "queryTablesByDsId",
+        "summary": "查询数据源下所有表",
+        "description": "",
+        "tags": [
+          "数据源信息表DsInfo管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "param",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.param.IdsParam",
+              "$ref": "#/definitions/com.ruijing.sync.common.param.IdsParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<java.lang.String>>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listjava.lang.String"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dsInfo/page": {
+      "post": {
+        "operationId": "queryByPage",
+        "summary": "DsInfo 分页查询",
+        "description": "",
+        "tags": [
+          "数据源信息表DsInfo管理"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "pageQuery",
+            "description": "",
+            "required": false,
+            "schema": {
+              "originalRef": "com.ruijing.sync.common.query.DsInfoPageQuery",
+              "$ref": "#/definitions/com.ruijing.sync.common.query.DsInfoPageQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "originalRef": "com.ruijing.fundamental.api.remote.PageableResponse<java.util.List<com.ruijing.sync.common.vo.DsInfoPageVO>>",
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.PageableResponsejava.util.Listcom.ruijing.sync.common.vo.DsInfoPageVO"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    }
+  },
+  "definitions": {
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "返回结果数据"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "object",
+          "description": "返回结果数据"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.EsMappingUpdateParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "methodMappings": {
+          "type": "object",
+          "description": "计算值映射关系"
+        },
+        "etlCondition": {
+          "type": "string",
+          "description": "全量同步额外条件"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.RdbMappingUpdateParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceUpdateParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "任务实例名"
+        },
+        "esMappingUpdateParam": {
+          "description": "es同步类型的额外参数,syncType为 2 时传",
+          "originalRef": "com.ruijing.sync.common.param.EsMappingUpdateParam",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.EsMappingUpdateParam"
+        },
+        "rdbMappingUpdateParam": {
+          "description": "rdb同步类型的额外参数,syncType为 1 时传",
+          "originalRef": "com.ruijing.sync.common.param.RdbMappingUpdateParam",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.RdbMappingUpdateParam"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.SyncInstanceVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "description": "返回结果数据",
+          "originalRef": "com.ruijing.sync.common.vo.SyncInstanceVO",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.SyncInstanceVO"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.SyncInstanceVO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "任务实例名"
+        },
+        "topicList": {
+          "type": "string",
+          "description": "mq的topic"
+        },
+        "srcDsIdList": {
+          "type": "string",
+          "description": "源数据库id数组"
+        },
+        "srcTableName": {
+          "type": "string",
+          "description": "源数据表名"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "实例状态 0 草稿 1 启用 2禁用"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 rdb 2 es"
+        },
+        "team": {
+          "type": "string",
+          "description": "同步实例所属团队"
+        },
+        "pushType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "实例目标端推送数据方式"
+        },
+        "enableLog": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "是否开启日志（1开启 0关闭）"
+        },
+        "mappingId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "映射关系Id"
+        },
+        "mappingJson": {
+          "type": "object",
+          "description": "映射关系json"
+        },
+        "createUserGuid": {
+          "type": "string",
+          "description": "创建人guid"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        },
+        "targetTableName": {
+          "type": "string",
+          "description": "目标表/索引名"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.ClickhouseMappingParam": {
+      "type": "object",
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.EsMappingParam": {
+      "type": "object",
+      "properties": {
+        "indexName": {
+          "type": "string",
+          "description": "索引名"
+        },
+        "esIndexId": {
+          "type": "string",
+          "description": "es主键字段名"
+        },
+        "methodMappings": {
+          "type": "object",
+          "description": "计算值映射关系"
+        },
+        "etlCondition": {
+          "type": "string",
+          "description": "全量同步额外条件"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.RdbMappingParam": {
+      "type": "object",
+      "properties": {
+        "etlCondition": {
+          "type": "string",
+          "description": "全量同步额外条件"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "任务实例名"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 rdb 2 es 3 clickhouse"
+        },
+        "team": {
+          "type": "string",
+          "description": "同步实例所属团队"
+        },
+        "createUserGuid": {
+          "type": "string",
+          "description": "创建人guid"
+        },
+        "esMappingParam": {
+          "description": "es同步类型的额外参数,syncType为 2 时传",
+          "originalRef": "com.ruijing.sync.common.param.EsMappingParam",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.EsMappingParam"
+        },
+        "rdbMappingParam": {
+          "description": "rdb同步类型的额外参数,syncType为 1 时传",
+          "originalRef": "com.ruijing.sync.common.param.RdbMappingParam",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.RdbMappingParam"
+        },
+        "clickhouseMappingParam": {
+          "description": "clickhouse同步类型的额外参数,syncType为 3 时传",
+          "originalRef": "com.ruijing.sync.common.param.ClickhouseMappingParam",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.ClickhouseMappingParam"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.DeleteParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.DsInfoParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "name": {
+          "type": "string",
+          "description": "数据源名"
+        },
+        "url": {
+          "type": "string",
+          "description": "数据源连接url"
+        },
+        "userName": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": "密码"
+        },
+        "properties": {
+          "type": "object",
+          "description": "额外信息"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "数据源类型 1 mysql 2 es ..."
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceCopyParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "实例id"
+        },
+        "env": {
+          "type": "string",
+          "description": "环境 prod, test "
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "指定新实例的名字，可为空"
+        },
+        "tableNameDsInfoParamList": {
+          "type": "array",
+          "description": "跨环境迁移，补全表对应的数据源信息",
+          "items": {
+            "originalRef": "com.ruijing.sync.common.param.SyncInstanceCopyParam.TableNameDsInfoParam",
+            "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceCopyParam.TableNameDsInfoParam"
+          }
+        },
+        "tableNameDsIdMap": {
+          "type": "object",
+          "description": "跨环境复制实例-数据源已存在，复用情况",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        },
+        "sameDsId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所有表都在同一个数据源情况，无需给表名和数据源id对应关系"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceCopyParam.TableNameDsInfoParam": {
+      "type": "object",
+      "properties": {
+        "tableNameList": {
+          "type": "array",
+          "description": "实例的表",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dsInfoParam": {
+          "description": "实例中表对应的数据源信息（一般来说只有一个）",
+          "originalRef": "com.ruijing.sync.common.param.DsInfoParam",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.DsInfoParam"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.SyncInstancePublishVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "description": "返回结果数据",
+          "originalRef": "com.ruijing.sync.common.vo.SyncInstancePublishVO",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.SyncInstancePublishVO"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.SyncInstancePublishVO": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否发布成功"
+        },
+        "checkError": {
+          "type": "string",
+          "description": "校验错误信息"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.IdsParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.query.SyncInstanceQuery": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "idList": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceLogConfigParam": {
+      "type": "object",
+      "properties": {
+        "enableLog": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为启用日志"
+        },
+        "ids": {
+          "type": "array",
+          "description": "实例id列表",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceStatusParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "实例id"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "实例变更状态 1 启用 2 禁用"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.PageableResponsejava.util.Listcom.ruijing.sync.common.vo.SyncInstancePageVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "originalRef": "com.ruijing.sync.common.vo.SyncInstancePageVO",
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.SyncInstancePageVO"
+          }
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageNo": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.PageableResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "object",
+          "description": "返回结果数据"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageNo": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.SyncInstancePageVO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "任务实例名"
+        },
+        "srcTableName": {
+          "type": "string",
+          "description": "源数据表名"
+        },
+        "targetTableName": {
+          "type": "string",
+          "description": "目标表/索引名"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 rdb 2 es"
+        },
+        "team": {
+          "type": "string",
+          "description": "同步实例所属团队"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "实例状态 0 草稿 1 启用 2禁用"
+        },
+        "enableLog": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "是否开启日志（1开启 0关闭）"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.query.SyncInstancePageQuery": {
+      "type": "object",
+      "properties": {
+        "pageNo": {
+          "type": "integer",
+          "format": "int32-object"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32-object"
+        },
+        "idList": {
+          "type": "array",
+          "description": "id数组",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "任务实例名"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "实例状态 0 草稿 1 启用 2禁用"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 rdb 2 es"
+        },
+        "enableLog": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "是否开启日志 1 开启 0 关闭"
+        },
+        "team": {
+          "type": "string",
+          "description": "同步实例所属团队"
+        },
+        "createUserGuid": {
+          "type": "string",
+          "description": "创建人guid"
+        },
+        "createTimeStart": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间起"
+        },
+        "createTimeEnd": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间止"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.EtlSyncLogParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "syncInstanceName": {
+          "type": "string",
+          "description": "同步实例名"
+        },
+        "syncInstanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步实例id"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 mysql  2 es"
+        },
+        "topic": {
+          "type": "string",
+          "description": "mq的topic"
+        },
+        "syncStartTime": {
+          "type": "string",
+          "format": "date",
+          "description": "同步开始时间"
+        },
+        "syncEndTime": {
+          "type": "string",
+          "format": "date",
+          "description": "同步结束时间"
+        },
+        "srcDsInfo": {
+          "type": "string",
+          "description": "源端信息（库-表）"
+        },
+        "targetDsInfo": {
+          "type": "string",
+          "description": "目标端数据源信息（库-表 or 索引）"
+        },
+        "syncResult": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步结果 1 成功 2 失败"
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步总条数"
+        },
+        "successCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "成功条数"
+        },
+        "failCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "失败条数"
+        },
+        "errorMsg": {
+          "type": "string",
+          "description": "失败原因"
+        },
+        "timeConsuming": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步总耗时"
+        },
+        "operateUserId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "操作人id"
+        },
+        "logType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "日志类型 1全量同步日志 2 补偿同步日志 3 断点续传日志"
+        },
+        "relateLog": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "补偿日志的关联日志id"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.EtlSyncLogVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "description": "返回结果数据",
+          "originalRef": "com.ruijing.sync.common.vo.EtlSyncLogVO",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlSyncLogVO"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EtlProgressSnapshot": {
+      "type": "object",
+      "properties": {
+        "snapshotId": {
+          "type": "string",
+          "description": "快照id"
+        },
+        "instanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "实例id"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "实例名"
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "单位id（本地部署）"
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步总条数"
+        },
+        "successCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "成功条数"
+        },
+        "failCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "失败条数"
+        },
+        "filterCnt": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "过滤条数"
+        },
+        "syncFinished": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "同步状态（全部全部表是否同步完成）"
+        },
+        "sharded": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为水平分表"
+        },
+        "tableInfoList": {
+          "type": "array",
+          "description": "同步表信息",
+          "items": {
+            "originalRef": "com.ruijing.sync.common.vo.EtlProgressSnapshot.TableSyncInfo",
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlProgressSnapshot.TableSyncInfo"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo": {
+      "type": "object",
+      "properties": {
+        "batchId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "批次id"
+        },
+        "batchSize": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前批次同步数量"
+        },
+        "minDataId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前批次起始id"
+        },
+        "maxDataId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前批次最大id"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EtlProgressSnapshot.TableSyncInfo": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string",
+          "description": "表名"
+        },
+        "tableDataCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前表总数据量"
+        },
+        "successCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "成功条数"
+        },
+        "failCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "失败条数"
+        },
+        "filterCnt": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "过滤条数"
+        },
+        "totalBatchCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步总批次"
+        },
+        "curBatch": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前同步批次"
+        },
+        "syncFinished": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "同步状态（全部同步批次是否执行完）"
+        },
+        "finishBatchInfoList": {
+          "type": "array",
+          "description": "已完成的批次",
+          "items": {
+            "originalRef": "com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo",
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo"
+          }
+        },
+        "failBatchInfoList": {
+          "type": "array",
+          "description": "失败的批次",
+          "items": {
+            "originalRef": "com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo",
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EtlSyncLogVO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "syncInstanceName": {
+          "type": "string",
+          "description": "同步实例名"
+        },
+        "syncInstanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步实例id"
+        },
+        "syncType": {
+          "type": "string",
+          "description": "同步类型 1 mysql  2 es"
+        },
+        "topic": {
+          "type": "string",
+          "description": "mq的topic"
+        },
+        "syncStartTime": {
+          "type": "string",
+          "format": "date",
+          "description": "同步开始时间"
+        },
+        "syncEndTime": {
+          "type": "string",
+          "format": "date",
+          "description": "同步结束时间"
+        },
+        "srcDsInfo": {
+          "type": "string",
+          "description": "源端信息（库-表）"
+        },
+        "targetDsInfo": {
+          "type": "string",
+          "description": "目标端数据源信息（库-表 or 索引）"
+        },
+        "syncResult": {
+          "type": "string",
+          "description": "同步结果 1 成功 2 失败"
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步总条数"
+        },
+        "successCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "成功条数"
+        },
+        "failCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "失败条数"
+        },
+        "errorMsg": {
+          "type": "string",
+          "description": "失败原因"
+        },
+        "timeConsuming": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步总耗时"
+        },
+        "operateUserId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "操作人id"
+        },
+        "snapshotId": {
+          "type": "string"
+        },
+        "snapshotJson": {
+          "originalRef": "com.ruijing.sync.common.vo.EtlProgressSnapshot",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlProgressSnapshot"
+        },
+        "logType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "日志类型 0全量同步日志 1 补偿同步日志 2 断点续传日志"
+        },
+        "relateLog": {
+          "description": "补偿日志的关联日志",
+          "originalRef": "com.ruijing.sync.common.vo.EtlSyncLogVO",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlSyncLogVO"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.query.EtlSyncLogQuery": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "syncInstanceName": {
+          "type": "string",
+          "description": "同步实例名"
+        },
+        "syncInstanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步实例id"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 mysql  2 es"
+        },
+        "topic": {
+          "type": "string",
+          "description": "mq的topic"
+        },
+        "syncResult": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步结果 1 成功 2 失败"
+        },
+        "logType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "日志类型 1全量同步日志 2 补偿同步日志 3 断点续传日志"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.PageableResponsejava.util.Listcom.ruijing.sync.common.vo.EtlSyncLogVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "originalRef": "com.ruijing.sync.common.vo.EtlSyncLogVO",
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlSyncLogVO"
+          }
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageNo": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.query.EtlSyncLogPageQuery": {
+      "type": "object",
+      "properties": {
+        "pageNo": {
+          "type": "integer",
+          "format": "int32-object"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32-object"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "syncInstanceName": {
+          "type": "string",
+          "description": "同步实例名"
+        },
+        "snapshotIdList": {
+          "type": "array",
+          "description": "同步快照id数组",
+          "items": {
+            "type": "string"
+          }
+        },
+        "syncInstanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步实例id"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 mysql  2 es"
+        },
+        "logTypeList": {
+          "type": "array",
+          "description": "日志类型 1 mysql  2 es",
+          "items": {
+            "type": "integer",
+            "format": "int32-object"
+          }
+        },
+        "syncResult": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步结果 1 成功 2 失败"
+        },
+        "createTimeStart": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间起"
+        },
+        "createTimeEnd": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间止"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.DsInfoVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "description": "返回结果数据",
+          "originalRef": "com.ruijing.sync.common.vo.DsInfoVO",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.DsInfoVO"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.DsInfoVO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "name": {
+          "type": "string",
+          "description": "数据源名"
+        },
+        "url": {
+          "type": "string",
+          "description": "数据源连接url"
+        },
+        "userName": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": "密码"
+        },
+        "properties": {
+          "type": "string",
+          "description": "额外信息"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "数据源类型 1 mysql 2 es ..."
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.query.DsInfoQuery": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listjava.lang.String": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.PageableResponsejava.util.Listcom.ruijing.sync.common.vo.DsInfoPageVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "originalRef": "com.ruijing.sync.common.vo.DsInfoPageVO",
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.DsInfoPageVO"
+          }
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageNo": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.DsInfoPageVO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "name": {
+          "type": "string",
+          "description": "数据源名"
+        },
+        "url": {
+          "type": "string",
+          "description": "数据源连接url"
+        },
+        "properties": {
+          "type": "string",
+          "description": "额外信息"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "数据源类型 1 mysql 2 es ..."
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.query.DsInfoPageQuery": {
+      "type": "object",
+      "properties": {
+        "pageNo": {
+          "type": "integer",
+          "format": "int32-object"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32-object"
+        },
+        "idList": {
+          "type": "array",
+          "description": "idList",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "数据源名"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "数据源类型 1 mysql 2 es ..."
+        },
+        "createTimeStart": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间起"
+        },
+        "createTimeEnd": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间止"
+        }
+      },
+      "description": ""
+    }
+  },
+  "schemes": [
+    "http"
+  ]
+}

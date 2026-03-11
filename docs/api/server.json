@@ -1,0 +1,1625 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "msharp_teapot_server",
+    "description": "msharp_teapot_server"
+  },
+  "host": "cloud.rj-info.com",
+  "basePath": "/teapot",
+  "paths": {
+    "/ping": {
+      "post": {
+        "operationId": "syncTypeDict",
+        "summary": "syncTypeDict",
+        "tags": [
+          "PingController"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/nonToken/doInstanceCopy": {
+      "post": {
+        "operationId": "doInstanceCopy",
+        "summary": "执行实例复制的整个流程（用于配合/instance/copy接口，仅用于该接口进行http请求）",
+        "description": "",
+        "tags": [
+          "开放无需token调用的接口"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg0",
+            "description": "",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceFullCopyParam",
+              "originalRef": "com.ruijing.sync.common.param.SyncInstanceFullCopyParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.SyncInstanceVO",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.SyncInstanceVO>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/instance/support/createCanalInstance": {
+      "post": {
+        "operationId": "createCanalInstance",
+        "summary": "根据同步实例创建canal实例",
+        "description": "     * 1. 单表单canal实例情况， 每个实例可能有1-n个表，会校验每个表是否已有canal实例存在，有则不建立\n     * 2. 多表组合canal实例情况（主要用于本地部署），实例所属数据源需一致，若需要组合的表，其中已经有某些表存在canal实例，则剩余表组合建立canal实例\n     * 3. bindTopic 开关用于绑定binlog推送的topic，理论上，无论是单表单实例还是多表组合实例情况，都是一个表一个topic，格式为canal_库名_表名_环境",
+        "tags": [
+          "实例支持业务新建"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.sync.common.param.CreateCanalInstanceParam",
+              "originalRef": "com.ruijing.sync.common.param.CreateCanalInstanceParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.CanalInstanceCreateVO",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.CanalInstanceCreateVO>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/instance/support/canalInstanceStatistic": {
+      "post": {
+        "operationId": "canalInstanceStatistic",
+        "summary": "查询实例统计信息",
+        "description": "",
+        "tags": [
+          "实例支持业务新建"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.sync.common.param.CanalInstanceStatisticRequest",
+              "originalRef": "com.ruijing.sync.common.param.CanalInstanceStatisticRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.String",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.String>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/instance/support/localDeploy/orgSubscribeExcel": {
+      "post": {
+        "operationId": "orgSubscribeExcel",
+        "summary": "实例单位订阅详细信息excel",
+        "description": "",
+        "tags": [
+          "实例支持业务新建"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.String",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.String>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etl/latestSnapshot": {
+      "post": {
+        "operationId": "latestSnapshot",
+        "summary": "查询实例还在同步中的快照信息",
+        "description": "",
+        "tags": [
+          "全量同步"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.sync.common.query.EtlSnapShotQuery",
+              "originalRef": "com.ruijing.sync.common.query.EtlSnapShotQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EtlProgressSnapshot",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.EtlProgressSnapshot>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etl/startEtl": {
+      "post": {
+        "operationId": "startEtl",
+        "summary": "开启全量同步任务",
+        "description": "",
+        "tags": [
+          "全量同步"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.sync.adapter.core.param.etl.EtlSyncParam",
+              "originalRef": "com.ruijing.sync.adapter.core.param.etl.EtlSyncParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.EtlInfoVO",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<com.ruijing.sync.common.vo.EtlInfoVO>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etl/breakpointEtl": {
+      "post": {
+        "operationId": "breakpointEtl",
+        "summary": "ETL断点续传",
+        "description": "",
+        "tags": [
+          "全量同步"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.sync.adapter.core.param.etl.EtlSyncParam",
+              "originalRef": "com.ruijing.sync.adapter.core.param.etl.EtlSyncParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.lang.Boolean>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/etl/listBySnapshotIds": {
+      "post": {
+        "operationId": "listBySnapshotIds",
+        "summary": "批量获取全量同步快照",
+        "description": "",
+        "tags": [
+          "全量同步"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "arg1",
+            "description": "",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.sync.common.query.EtlSnapShotQuery",
+              "originalRef": "com.ruijing.sync.common.query.EtlSnapShotQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EtlProgressSnapshot",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.EtlProgressSnapshot>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dict/team": {
+      "post": {
+        "operationId": "teamDict",
+        "summary": "团队类型枚举",
+        "description": "",
+        "tags": [
+          "获取枚举值接口"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.String",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.String>>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dict/dsInfo": {
+      "post": {
+        "operationId": "dsInfoDict",
+        "summary": "数据源字典",
+        "description": "",
+        "tags": [
+          "获取枚举值接口"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Long",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.Long>>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dict/syncType": {
+      "post": {
+        "operationId": "syncTypeDict",
+        "summary": "同步类型枚举",
+        "description": "",
+        "tags": [
+          "获取枚举值接口"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Integer",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.Integer>>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dict/instanceStatus": {
+      "post": {
+        "operationId": "instanceStatusDict",
+        "summary": "实例状态枚举",
+        "description": "",
+        "tags": [
+          "获取枚举值接口"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Integer",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.Integer>>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dict/esMappingType": {
+      "post": {
+        "operationId": "esMappingTypeDict",
+        "summary": "ES-表映射类型",
+        "description": "",
+        "tags": [
+          "获取枚举值接口"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Integer",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.Integer>>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    },
+    "/dict/dataType": {
+      "post": {
+        "operationId": "dataTypeDict",
+        "summary": "字段JAVA数据类型",
+        "description": "",
+        "tags": [
+          "获取枚举值接口"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Integer",
+              "originalRef": "com.ruijing.fundamental.api.remote.RemoteResponse<java.util.List<com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.Integer>>>"
+            }
+          }
+        },
+        "enableSse": false,
+        "websocketFlag": false
+      }
+    }
+  },
+  "definitions": {
+    "com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.SyncInstanceVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "description": "返回结果数据",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.SyncInstanceVO",
+          "originalRef": "com.ruijing.sync.common.vo.SyncInstanceVO"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "object",
+          "description": "返回结果数据"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.SyncInstanceVO": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "任务实例名"
+        },
+        "topicList": {
+          "type": "string",
+          "description": "mq的topic"
+        },
+        "srcDsIdList": {
+          "type": "string",
+          "description": "源数据库id数组"
+        },
+        "srcTableName": {
+          "type": "string",
+          "description": "源数据表名"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "实例状态 0 草稿 1 启用 2禁用"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 rdb 2 es"
+        },
+        "team": {
+          "type": "string",
+          "description": "同步实例所属团队"
+        },
+        "pushType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "实例目标端推送数据方式"
+        },
+        "enableLog": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "是否开启日志（1开启 0关闭）"
+        },
+        "mappingId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "映射关系Id"
+        },
+        "mappingJson": {
+          "type": "object",
+          "description": "映射关系json"
+        },
+        "createUserGuid": {
+          "type": "string",
+          "description": "创建人guid"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date",
+          "description": "创建时间"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date",
+          "description": "更新时间"
+        },
+        "targetTableName": {
+          "type": "string",
+          "description": "目标表/索引名"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.dto.EsColumnItemRequestDTO": {
+      "type": "object",
+      "properties": {
+        "tableItemId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属表id"
+        },
+        "columnItemList": {
+          "type": "array",
+          "description": "列映射信息",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.dto.EsColumnItemRequestDTO.EsColumnItemDTO",
+            "originalRef": "com.ruijing.sync.common.dto.EsColumnItemRequestDTO.EsColumnItemDTO"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.dto.EsColumnItemRequestDTO.EsColumnItemDTO": {
+      "type": "object",
+      "properties": {
+        "srcColumnName": {
+          "type": "string",
+          "description": "源表字段名"
+        },
+        "srcDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "源端字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "targetColumnName": {
+          "type": "string",
+          "description": "映射到目标字段名"
+        },
+        "targetDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "目标字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "needData": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否需要该数据"
+        },
+        "foreignKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主表外键"
+        },
+        "mainTableFk": {
+          "type": "string",
+          "description": "子表对应主表外键列名"
+        },
+        "primaryKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主键"
+        },
+        "columnSql": {
+          "type": "string",
+          "description": "从表字段的查询sql，如该字段为concat(column1,column2)"
+        },
+        "delimiter": {
+          "type": "string",
+          "description": "字段分隔符，分割字段内容如orgId1,orgId2,OrgId3的数据"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.dto.EsTableItemRequestDTO": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属实例id"
+        },
+        "mappingId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属映射关系id"
+        },
+        "tableItemList": {
+          "type": "array",
+          "description": "表映射关系",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.dto.EsTableItemRequestDTO.EsTableItemDTO",
+            "originalRef": "com.ruijing.sync.common.dto.EsTableItemRequestDTO.EsTableItemDTO"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.dto.EsTableItemRequestDTO.EsTableItemDTO": {
+      "type": "object",
+      "properties": {
+        "tableItemId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "映射类型 1 普通field，2 nested，3 array，4 复杂计算值"
+        },
+        "nestedKey": {
+          "type": "string",
+          "description": "es的nested字段名"
+        },
+        "srcDsId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "表所属数据源id"
+        },
+        "tableName": {
+          "type": "string",
+          "description": "tableName"
+        },
+        "tableNameRegex": {
+          "type": "string",
+          "description": "表名正则（表被水平拆分时）"
+        },
+        "shardedCount": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "水平分表的分片数"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "dbName"
+        },
+        "topic": {
+          "type": "string",
+          "description": "表对应的topic(topic未指定默认取表名)"
+        },
+        "primaryKey": {
+          "type": "string",
+          "description": "当前表主键，用于构造update语句"
+        },
+        "master": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否主表"
+        },
+        "otherCondition": {
+          "type": "string",
+          "description": "查询从表数据时,除了关联主表外键,还有额外的查询条件"
+        },
+        "updateTimeColumnName": {
+          "type": "string",
+          "description": "标识更新时间的字段名"
+        },
+        "delimiter": {
+          "type": "string",
+          "description": "连接符，如果array的item来源为多个表字段的拼接的话"
+        },
+        "esColumnItemRequestDTO": {
+          "description": "es类型列映射新增入参",
+          "$ref": "#/definitions/com.ruijing.sync.common.dto.EsColumnItemRequestDTO",
+          "originalRef": "com.ruijing.sync.common.dto.EsColumnItemRequestDTO"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.dto.RdbColumnItemRequestDTO": {
+      "type": "object",
+      "properties": {
+        "tableItemId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属表id"
+        },
+        "columnItemList": {
+          "type": "array",
+          "description": "列映射信息",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.dto.RdbColumnItemRequestDTO.RdbColumnItemDTO",
+            "originalRef": "com.ruijing.sync.common.dto.RdbColumnItemRequestDTO.RdbColumnItemDTO"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.dto.RdbColumnItemRequestDTO.RdbColumnItemDTO": {
+      "type": "object",
+      "properties": {
+        "srcColumnName": {
+          "type": "string",
+          "description": "源表字段名"
+        },
+        "srcDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "源端字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "targetColumnName": {
+          "type": "string",
+          "description": "映射到目标字段名"
+        },
+        "targetDataType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "目标字段数据类型，枚举值如 1 Integer 2 Long 3 String"
+        },
+        "needData": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否需要该数据"
+        },
+        "foreignKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主表外键"
+        },
+        "mainTableFk": {
+          "type": "string",
+          "description": "子表对应主表外键列名"
+        },
+        "primaryKey": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为主键"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.dto.RdbTableItemRequestDTO": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属实例id"
+        },
+        "mappingId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所属映射关系id"
+        },
+        "tableItemList": {
+          "type": "array",
+          "description": "表映射关系",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.dto.RdbTableItemRequestDTO.RdbTableItemDTO",
+            "originalRef": "com.ruijing.sync.common.dto.RdbTableItemRequestDTO.RdbTableItemDTO"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.dto.RdbTableItemRequestDTO.RdbTableItemDTO": {
+      "type": "object",
+      "properties": {
+        "srcDsId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "表所属数据源id"
+        },
+        "tableName": {
+          "type": "string",
+          "description": "tableName"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "dbName"
+        },
+        "topic": {
+          "type": "string",
+          "description": "表对应的topic(topic未指定默认取表名)"
+        },
+        "primaryKey": {
+          "type": "string",
+          "description": "当前表主键，用于构造update语句"
+        },
+        "master": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否主表"
+        },
+        "otherCondition": {
+          "type": "string",
+          "description": "查询从表数据时,除了关联主表外键,还有额外的查询条件"
+        },
+        "updateTimeColumnName": {
+          "type": "string",
+          "description": "标识更新时间的字段名"
+        },
+        "targetTableName": {
+          "type": "string",
+          "description": "目标表名（mappingAll=1时，为一对一表，不需要columnMappings）"
+        },
+        "targetPrimaryKey": {
+          "type": "string",
+          "description": "目标表主键，用于构造update语句"
+        },
+        "mappingAll": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否映射所有字段  全部映射  默认部分映射 源表目标表一对一且字段及数据类型完全一致"
+        },
+        "rdbColumnItemRequestDTO": {
+          "description": "rdb类型列映射新增入参",
+          "$ref": "#/definitions/com.ruijing.sync.common.dto.RdbColumnItemRequestDTO",
+          "originalRef": "com.ruijing.sync.common.dto.RdbColumnItemRequestDTO"
+        },
+        "needSync": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否需要被同步(为从表时), 默认需要"
+        },
+        "orgIdColumnName": {
+          "type": "string",
+          "description": "orgId字段名称"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.ClickhouseMappingParam": {
+      "type": "object",
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.DsInfoParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "name": {
+          "type": "string",
+          "description": "数据源名"
+        },
+        "url": {
+          "type": "string",
+          "description": "数据源连接url"
+        },
+        "userName": {
+          "type": "string",
+          "description": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "description": "密码"
+        },
+        "properties": {
+          "type": "object",
+          "description": "额外信息"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "数据源类型 1 mysql 2 es ..."
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.EsMappingParam": {
+      "type": "object",
+      "properties": {
+        "indexName": {
+          "type": "string",
+          "description": "索引名"
+        },
+        "esIndexId": {
+          "type": "string",
+          "description": "es主键字段名"
+        },
+        "methodMappings": {
+          "type": "object",
+          "description": "计算值映射关系"
+        },
+        "etlCondition": {
+          "type": "string",
+          "description": "全量同步额外条件"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.RdbMappingParam": {
+      "type": "object",
+      "properties": {
+        "etlCondition": {
+          "type": "string",
+          "description": "全量同步额外条件"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceCopyParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "实例id"
+        },
+        "env": {
+          "type": "string",
+          "description": "环境 prod, test "
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "指定新实例的名字，可为空"
+        },
+        "tableNameDsInfoParamList": {
+          "type": "array",
+          "description": "跨环境迁移，补全表对应的数据源信息",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceCopyParam.TableNameDsInfoParam",
+            "originalRef": "com.ruijing.sync.common.param.SyncInstanceCopyParam.TableNameDsInfoParam"
+          }
+        },
+        "tableNameDsIdMap": {
+          "type": "object",
+          "description": "跨环境复制实例-数据源已存在，复用情况",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        },
+        "sameDsId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "所有表都在同一个数据源情况，无需给表名和数据源id对应关系"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceCopyParam.TableNameDsInfoParam": {
+      "type": "object",
+      "properties": {
+        "tableNameList": {
+          "type": "array",
+          "description": "实例的表",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dsInfoParam": {
+          "description": "实例中表对应的数据源信息（一般来说只有一个）",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.DsInfoParam",
+          "originalRef": "com.ruijing.sync.common.param.DsInfoParam"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceFullCopyParam": {
+      "type": "object",
+      "properties": {
+        "team": {
+          "type": "string",
+          "description": "实例复制需要路由转发的服务分组"
+        },
+        "copyParam": {
+          "description": "原始实例复制请求",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceCopyParam",
+          "originalRef": "com.ruijing.sync.common.param.SyncInstanceCopyParam"
+        },
+        "syncInstanceParam": {
+          "description": "同步实例基础信息及mapping信息入参",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.SyncInstanceParam",
+          "originalRef": "com.ruijing.sync.common.param.SyncInstanceParam"
+        },
+        "esTableItemRequestDTO": {
+          "description": "es类型表映射新增入参",
+          "$ref": "#/definitions/com.ruijing.sync.common.dto.EsTableItemRequestDTO",
+          "originalRef": "com.ruijing.sync.common.dto.EsTableItemRequestDTO"
+        },
+        "rdbTableItemRequestDTO": {
+          "description": "rdb类型表映射新增入参",
+          "$ref": "#/definitions/com.ruijing.sync.common.dto.RdbTableItemRequestDTO",
+          "originalRef": "com.ruijing.sync.common.dto.RdbTableItemRequestDTO"
+        },
+        "srcInstanceVO": {
+          "description": "需要复制的实例信息",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.SyncInstanceVO",
+          "originalRef": "com.ruijing.sync.common.vo.SyncInstanceVO"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.SyncInstanceParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "id"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "任务实例名"
+        },
+        "syncType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "同步类型 1 rdb 2 es 3 clickhouse"
+        },
+        "team": {
+          "type": "string",
+          "description": "同步实例所属团队"
+        },
+        "createUserGuid": {
+          "type": "string",
+          "description": "创建人guid"
+        },
+        "esMappingParam": {
+          "description": "es同步类型的额外参数,syncType为 2 时传",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.EsMappingParam",
+          "originalRef": "com.ruijing.sync.common.param.EsMappingParam"
+        },
+        "rdbMappingParam": {
+          "description": "rdb同步类型的额外参数,syncType为 1 时传",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.RdbMappingParam",
+          "originalRef": "com.ruijing.sync.common.param.RdbMappingParam"
+        },
+        "clickhouseMappingParam": {
+          "description": "clickhouse同步类型的额外参数,syncType为 3 时传",
+          "$ref": "#/definitions/com.ruijing.sync.common.param.ClickhouseMappingParam",
+          "originalRef": "com.ruijing.sync.common.param.ClickhouseMappingParam"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.CanalInstanceCreateVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.CanalInstanceCreateVO",
+            "originalRef": "com.ruijing.sync.common.vo.CanalInstanceCreateVO"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.CanalInstanceCreateVO": {
+      "type": "object",
+      "properties": {
+        "syncInstanceIdStr": {
+          "type": "string",
+          "description": "涉及同步实例id"
+        },
+        "dbName": {
+          "type": "string",
+          "description": "需要创建canal实例的数据库名"
+        },
+        "tableNameList": {
+          "type": "array",
+          "description": "创建了canal实例的表名",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tableTopicMap": {
+          "type": "object",
+          "description": "canal实例各表对应topic",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "canalInstanceId": {
+          "type": "string",
+          "description": "canal实例id"
+        },
+        "canalInstanceName": {
+          "type": "string",
+          "description": "canal实例名"
+        },
+        "existCanalInstanceTableNameList": {
+          "type": "array",
+          "description": "canal实例已经存在的表名",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createCanalInstanceSuccess": {
+          "type": "boolean",
+          "description": "canal实例是否创建成功"
+        },
+        "createInstanceFailReason": {
+          "type": "string",
+          "description": "canal实例创建失败原因"
+        },
+        "createTopicSuccess": {
+          "type": "boolean",
+          "description": "topic是否创建成功"
+        },
+        "createTopicFailReason": {
+          "type": "string",
+          "description": "topic创建失败原因"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.CreateCanalInstanceParam": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步实例id"
+        },
+        "instanceIdList": {
+          "type": "array",
+          "description": "实例ids",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        },
+        "singleTable": {
+          "type": "boolean",
+          "description": "是否单表单canal实例(默认false)"
+        },
+        "bindTopic": {
+          "type": "boolean",
+          "description": "是否绑定canal实例推送binlog的topic(默认true)"
+        },
+        "localDeploy": {
+          "type": "boolean",
+          "description": "是否未本地部署创建canal实例(默认false)"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.String": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "string",
+          "description": "返回结果数据"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.param.CanalInstanceStatisticRequest": {
+      "type": "object",
+      "properties": {
+        "env": {
+          "type": "string",
+          "description": "环境 prod dev"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EtlProgressSnapshot": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlProgressSnapshot",
+            "originalRef": "com.ruijing.sync.common.vo.EtlProgressSnapshot"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EtlProgressSnapshot": {
+      "type": "object",
+      "properties": {
+        "snapshotId": {
+          "type": "string",
+          "description": "快照id"
+        },
+        "instanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "实例id"
+        },
+        "logId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "日志id"
+        },
+        "instanceName": {
+          "type": "string",
+          "description": "实例名"
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "单位id（本地部署）"
+        },
+        "totalCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步总条数"
+        },
+        "successCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "成功条数"
+        },
+        "failCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "失败条数"
+        },
+        "filterCnt": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "过滤条数"
+        },
+        "syncFinished": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "同步状态（全部全部表是否同步完成）"
+        },
+        "sharded": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否为水平分表"
+        },
+        "tableInfoList": {
+          "type": "array",
+          "description": "同步表信息",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlProgressSnapshot.TableSyncInfo",
+            "originalRef": "com.ruijing.sync.common.vo.EtlProgressSnapshot.TableSyncInfo"
+          }
+        },
+        "consoleLog": {
+          "type": "string",
+          "description": "控制台日志"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo": {
+      "type": "object",
+      "properties": {
+        "batchId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "批次id"
+        },
+        "batchSize": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前批次同步数量"
+        },
+        "minDataId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前批次起始id"
+        },
+        "maxDataId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前批次最大id"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EtlProgressSnapshot.TableSyncInfo": {
+      "type": "object",
+      "properties": {
+        "tableName": {
+          "type": "string",
+          "description": "表名"
+        },
+        "tableDataCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前表总数据量"
+        },
+        "successCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "成功条数"
+        },
+        "failCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "失败条数"
+        },
+        "filterCnt": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "过滤条数"
+        },
+        "totalBatchCount": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "同步总批次"
+        },
+        "curBatch": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "当前同步批次"
+        },
+        "syncFinished": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "同步状态（全部同步批次是否执行完）"
+        },
+        "finishBatchInfoList": {
+          "type": "array",
+          "description": "已完成的批次",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo",
+            "originalRef": "com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo"
+          }
+        },
+        "failBatchInfoList": {
+          "type": "array",
+          "description": "失败的批次",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo",
+            "originalRef": "com.ruijing.sync.common.vo.EtlProgressSnapshot.BatchInfo"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.query.EtlSnapShotQuery": {
+      "type": "object",
+      "properties": {
+        "instanceIdList": {
+          "type": "array",
+          "description": "同步实例id（传此参数获取某个实例最新的快照信息）",
+          "items": {
+            "type": "integer",
+            "format": "int64-object"
+          }
+        },
+        "snapshotIdList": {
+          "type": "array",
+          "description": "快照id（传此参数批量获取快照信息）",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsecom.ruijing.sync.common.vo.EtlInfoVO": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "description": "返回结果数据",
+          "$ref": "#/definitions/com.ruijing.sync.common.vo.EtlInfoVO",
+          "originalRef": "com.ruijing.sync.common.vo.EtlInfoVO"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EtlInfoVO": {
+      "type": "object",
+      "properties": {
+        "callSuccess": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "是否调用成功"
+        },
+        "snapshotId": {
+          "type": "string",
+          "description": "快照信息id，成功时才有"
+        },
+        "errMsg": {
+          "type": "string",
+          "description": "错误信息"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.core.param.etl.EsAliasParam": {
+      "type": "object",
+      "description": ""
+    },
+    "com.ruijing.sync.adapter.core.param.etl.EtlSyncParam": {
+      "type": "object",
+      "properties": {
+        "instanceId": {
+          "type": "integer",
+          "format": "int64-object",
+          "description": "实例id"
+        },
+        "orgId": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "单位id（本地部署全量同步传）"
+        },
+        "params": {
+          "type": "array",
+          "description": "ETL条件",
+          "items": {
+            "type": "object"
+          }
+        },
+        "conditionsType": {
+          "type": "integer",
+          "format": "int32-object",
+          "description": "条件类型 1 sql过滤，2etl过滤"
+        },
+        "conditionsContent": {
+          "type": "string",
+          "description": "条件内容"
+        },
+        "snapshotId": {
+          "type": "string",
+          "description": "快照id"
+        },
+        "esAliasParam": {
+          "description": "更新索引别名操作",
+          "$ref": "#/definitions/com.ruijing.sync.adapter.core.param.etl.EsAliasParam",
+          "originalRef": "com.ruijing.sync.adapter.core.param.etl.EsAliasParam"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.lang.Boolean": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "boolean",
+          "format": "boolean-object",
+          "description": "返回结果数据"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.String": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.String",
+            "originalRef": "com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.String>"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EnumItemVO": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "object"
+        },
+        "val": {
+          "type": "object"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.String": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "val": {
+          "type": "string"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Long": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Long",
+            "originalRef": "com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.Long>"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Long": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "val": {
+          "type": "integer",
+          "format": "int64-object"
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.fundamental.api.remote.RemoteResponsejava.util.Listcom.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Integer": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "description": "结果返回状态码"
+        },
+        "msg": {
+          "type": "string",
+          "description": "异常结果返回值"
+        },
+        "data": {
+          "type": "array",
+          "description": "返回结果数据",
+          "items": {
+            "$ref": "#/definitions/com.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Integer",
+            "originalRef": "com.ruijing.sync.common.vo.EnumItemVO<java.lang.String,java.lang.Integer>"
+          }
+        }
+      },
+      "description": ""
+    },
+    "com.ruijing.sync.common.vo.EnumItemVOjava.lang.Stringjava.lang.Integer": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "val": {
+          "type": "integer",
+          "format": "int32-object"
+        }
+      },
+      "description": ""
+    }
+  },
+  "schemes": [
+    "http"
+  ]
+}
