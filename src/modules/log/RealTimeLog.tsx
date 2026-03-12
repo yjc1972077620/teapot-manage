@@ -1,9 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Card, Tag } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import RealtimeLogPanel from './components/RealtimeLogPanel';
-import etlSyncLogService from '../../services/crud/etlSyncLog/etlSyncLogService';
+
+const shouldExpectCompensation = (syncType?: number | string) => {
+  if (syncType == null || syncType === '') {
+    return false;
+  }
+  if (typeof syncType === 'number') {
+    return syncType !== 1;
+  }
+  const normalized = String(syncType).toLowerCase();
+  if (normalized === '1') {
+    return false;
+  }
+  return !normalized.includes('mysql');
+};
 
 const RealTimeLog = () => {
   const { id } = useParams();
@@ -12,28 +25,9 @@ const RealTimeLog = () => {
   const searchParams = new URLSearchParams(location.search);
   const snapshotId = searchParams.get('snapshotId') || undefined;
   const instanceId = id ? Number.parseInt(id, 10) : undefined;
-  const instanceName = (location.state as { instanceName?: string } | undefined)?.instanceName;
-  const [syncResult, setSyncResult] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    const fetchLogResult = async () => {
-      try {
-        if (!snapshotId && !instanceId) return;
-        const response = await etlSyncLogService.queryByPage({
-          pageNo: 1,
-          pageSize: 1,
-          snapshotIdList: snapshotId ? [snapshotId] : undefined,
-          syncInstanceId: snapshotId ? undefined : instanceId
-        });
-        const firstLog = response?.data?.[0];
-        setSyncResult(firstLog?.syncResult);
-      } catch (error) {
-        console.error('Fetch log result error:', error);
-      }
-    };
-
-    fetchLogResult();
-  }, [instanceId, snapshotId]);
+  const locationState = location.state as { instanceName?: string; syncType?: number | string } | undefined;
+  const instanceName = locationState?.instanceName;
+  const expectCompensation = shouldExpectCompensation(locationState?.syncType);
 
   const handleBack = () => {
     navigate(-1);
@@ -56,7 +50,12 @@ const RealTimeLog = () => {
         </div>
       </Card>
 
-      <RealtimeLogPanel instanceId={instanceId} snapshotId={snapshotId} syncResult={syncResult} />
+      <RealtimeLogPanel
+        expectCompensation={expectCompensation}
+        instanceId={instanceId}
+        snapshotId={snapshotId}
+        mode="realtime"
+      />
     </div>
   );
 };

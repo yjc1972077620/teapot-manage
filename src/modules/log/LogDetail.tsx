@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Card, Button, Alert, Tag } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -15,6 +15,19 @@ type NotificationState = {
   visible: boolean;
   message: string;
   type: 'info' | 'success' | 'warning' | 'error';
+};
+
+const shouldExpectCompensation = (syncType?: string, logType?: number) => {
+  if (logType === 1) {
+    return true;
+  }
+  if (logType === 2) {
+    return false;
+  }
+  if (!syncType) {
+    return false;
+  }
+  return !String(syncType).toLowerCase().includes('mysql');
 };
 
 const LogDetail = () => {
@@ -68,23 +81,26 @@ const LogDetail = () => {
     navigate(`/log/detail/${relateId}`);
   };
 
-  if (!log && !loading) return <div className="p-6 text-center text-gray-500">Log not found</div>;
+  const snapshotData = useMemo(() => {
+    const rawSnapshot = log?.snapshotJson;
+    if (typeof rawSnapshot !== 'string') {
+      return rawSnapshot ?? null;
+    }
+    try {
+      return JSON.parse(rawSnapshot);
+    } catch (error) {
+      console.error('Failed to parse snapshotJson', error);
+      return null;
+    }
+  }, [log?.snapshotJson]);
 
-  // 安全处理 snapshotJson，如果是字符串则解析
-  let snapshotData = log?.snapshotJson;
-  if (typeof snapshotData === 'string') {
-      try {
-          snapshotData = JSON.parse(snapshotData);
-      } catch (e) {
-          console.error("Failed to parse snapshotJson", e);
-          snapshotData = null;
-      }
-  }
+  if (!log && !loading) return <div className="p-6 text-center text-gray-500">Log not found</div>;
 
   const syncTypeValue = log?.syncType != null ? log.syncType : undefined;
   const syncResultValue = log?.syncResult != null ? log.syncResult : undefined;
   const logTypeValue = log?.logType;
   const logTypeLabel = logTypeValue === 0 ? '全量日志' : logTypeValue === 1 ? '补偿日志' : logTypeValue === 2 ? '断点日志' : '未知日志';
+  const expectCompensation = shouldExpectCompensation(syncTypeValue, logTypeValue);
   return (
     <div className="px-6 pb-6 pt-4 space-y-6 bg-gray-50 min-h-screen">
       <Card bordered={false} className="shadow-sm">
@@ -121,9 +137,9 @@ const LogDetail = () => {
               <div className="rounded-lg bg-gray-50 px-3 py-2">
                 <div className="text-gray-500">同步结果</div>
                 <div className="text-lg font-semibold text-gray-900">
-                  {syncResultValue.endsWith('成功') ? (
+                  {syncResultValue?.endsWith('成功') ? (
                     <Tag color="success">成功</Tag>
-                  ) : syncResultValue.endsWith('失败') ? (
+                  ) : syncResultValue?.endsWith('失败') ? (
                     <Tag color="error">失败</Tag>
                   ) : (
                     <Tag color="default">未知</Tag>
@@ -174,9 +190,11 @@ const LogDetail = () => {
 
           <div ref={consoleRef}>
             <RealtimeLogPanel
+              expectCompensation={expectCompensation}
               instanceId={log.syncInstanceId}
               snapshotId={log.snapshotId}
               initialSnapshot={snapshotData}
+              mode="auto"
               title="实时控制台日志"
               syncResult={log.syncResult}
             />

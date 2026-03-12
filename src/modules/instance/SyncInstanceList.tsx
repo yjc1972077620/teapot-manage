@@ -350,8 +350,6 @@ function SyncInstanceModule({ syncType = 2 }: { syncType?: number | string }) {
 
                 // 关闭弹窗
                 setSyncModalVisible(false);
-                // 刷新列表数据
-                fetchSyncInstances();
 
                 const snapshotId = response.data?.snapshotId;
                 const targetInstanceId = paramsToSend.instanceId;
@@ -361,7 +359,8 @@ function SyncInstanceModule({ syncType = 2 }: { syncType?: number | string }) {
                         state: {
                             instanceName: syncModalParams.instanceName,
                             snapshotId,
-                            instanceId: targetInstanceId
+                            instanceId: targetInstanceId,
+                            syncType: numericSyncType
                         }
                     });
                 }

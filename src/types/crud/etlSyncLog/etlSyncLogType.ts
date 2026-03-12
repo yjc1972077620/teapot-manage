@@ -50,9 +50,12 @@ export interface EtlProgressSnapshot {
   filterCnt?: number;
   instanceId?: number;
   instanceName?: string;
+  logType?: number;
   orgId?: number;
+  phase?: string;
   sharded?: boolean;
   snapshotId?: string;
+  storageSchemaVersion?: number;
   successCount?: number;
   syncFinished?: boolean;
   tableInfoList?: EtlProgressSnapshot_TableSyncInfo[];

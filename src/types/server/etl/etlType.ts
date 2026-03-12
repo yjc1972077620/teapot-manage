@@ -15,6 +15,25 @@ export interface EtlSnapShotQuery {
   snapshotIdList?: string[];
 }
 
+export interface EtlConsoleLogQuery {
+  afterId?: number;
+  limit?: number;
+  snapshotId: string;
+}
+
+export interface EtlConsoleLogItem {
+  content?: string;
+  createTime?: string;
+  id?: number;
+}
+
+export interface EtlConsoleLogPage {
+  hasMore?: boolean;
+  items?: EtlConsoleLogItem[];
+  nextAfterId?: number;
+  snapshotId?: string;
+}
+
 export interface EtlInfoVO {
   callSuccess?: boolean;
   errMsg?: string;
@@ -22,15 +41,19 @@ export interface EtlInfoVO {
 }
 
 export interface EtlProgressSnapshot {
+  /** 已废弃，控制台内容统一改走 /etl/listConsoleLogs。 */
   consoleLog?: string;
   failCount?: number;
   filterCnt?: number;
   instanceId?: number;
   instanceName?: string;
   logId?: number;
+  logType?: number;
   orgId?: number;
+  phase?: string;
   sharded?: boolean;
   snapshotId?: string;
+  storageSchemaVersion?: number;
   successCount?: number;
   syncFinished?: boolean;
   tableInfoList?: EtlProgressSnapshot_TableSyncInfo[];

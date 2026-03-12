@@ -1,6 +1,6 @@
 import { post } from '../../client';
 import type { RemoteResponse } from '../../../types/response';
-import type { EtlInfoVO, EtlProgressSnapshot, EtlSnapShotQuery, EtlSyncParam } from '../../../types/server/etl/etlType';
+import type { EtlConsoleLogPage, EtlConsoleLogQuery, EtlInfoVO, EtlProgressSnapshot, EtlSnapShotQuery, EtlSyncParam } from '../../../types/server/etl/etlType';
 
 const etlService = {
   /** 接口：查询实例还在同步中的快照信息 */
@@ -18,6 +18,10 @@ const etlService = {
   /** 接口：批量获取全量同步快照 */
   listBySnapshotIds(params?: EtlSnapShotQuery): Promise<RemoteResponse<EtlProgressSnapshot[]>> {
     return post<RemoteResponse<EtlProgressSnapshot[]>>('/etl/listBySnapshotIds', params);
+  },
+  /** 接口：分页查询ETL控制台日志 */
+  listConsoleLogs(params: EtlConsoleLogQuery): Promise<RemoteResponse<EtlConsoleLogPage>> {
+    return post<RemoteResponse<EtlConsoleLogPage>>('/etl/listConsoleLogs', params);
   },
 };
 
