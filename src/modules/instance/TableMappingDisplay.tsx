@@ -36,12 +36,42 @@ const TableMappingDisplay = ({
     }
   };
 
-  // 获取格式化器，优先使用传入的格式化器，否则使用默认函数
-  const getFormatter = (formatterName) => {
-    if (formatters[formatterName] && typeof formatters[formatterName] === 'function') {
-      return formatters[formatterName];
+  const formatDisplayValue = (value) => {
+    if (value === null || value === undefined || value === '') {
+      return '-';
     }
-    return (value) => value || '-';
+    return value;
+  };
+
+  // 获取格式化器，支持直接传函数或按名称从 formatters 中取
+  const getFormatter = (formatter) => {
+    if (typeof formatter === 'function') {
+      return formatter;
+    }
+
+    if (typeof formatter === 'string' && typeof formatters[formatter] === 'function') {
+      return formatters[formatter];
+    }
+
+    return (value) => formatDisplayValue(value);
+  };
+
+  const getRenderer = (renderer) => {
+    if (typeof renderer === 'function') {
+      return renderer;
+    }
+
+    if (typeof renderer === 'string') {
+      if (renderer === 'renderColumnWithTags') {
+        return (value, column, columnConfig) => renderColumnWithTags(value, column, columnConfig?.key);
+      }
+
+      if (renderer === 'renderBooleanTag') {
+        return renderBooleanTag;
+      }
+    }
+
+    return null;
   };
 
   // 获取数据源名称格式化器
@@ -60,10 +90,10 @@ const TableMappingDisplay = ({
   const getIsMainTableText = getFormatter('getIsMainTableText');
 
   // 渲染带标签的列名
-  const renderColumnWithTags = (column) => {
+  const renderColumnWithTags = (value, column, columnKey = 'srcColumnName') => {
     return (
       <div className="flex items-center">
-        <span>{column.srcColumnName || '-'}</span>
+        <span>{formatDisplayValue(value ?? column?.[columnKey])}</span>
         {column.primaryKey && (
           <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
             PK
@@ -167,12 +197,11 @@ const TableMappingDisplay = ({
                       let displayValue;
                       if (field.render && typeof field.render === 'function') {
                         displayValue = field.render(tableItem[field.key], tableItem) || '-';
-                      } else if (field.formatter && typeof field.formatter === 'function') {
-                        // 尝试获取传入的格式化器，如果没有则使用默认的
-                        const formatter = getFormatter(field.formatter.name);
-                        displayValue = formatter(tableItem[field.key]) || '-';
+                      } else if (field.formatter) {
+                        const formatter = getFormatter(field.formatter);
+                        displayValue = formatDisplayValue(formatter(tableItem[field.key], tableItem, field));
                       } else {
-                        displayValue = tableItem[field.key] || '-';
+                        displayValue = formatDisplayValue(tableItem[field.key]);
                       }
                        
                       return (
@@ -210,19 +239,15 @@ const TableMappingDisplay = ({
                               {(columnInfoConfigs[syncType]?.columns || []).map((colConfig, colIndex) => {
                                 const value = column[colConfig.key];
                                 let displayValue;
+                                const renderer = getRenderer(colConfig.render);
                                 
-                                if (colConfig.render === 'renderColumnWithTags') {
-                                  displayValue = renderColumnWithTags(column);
-                                } else if (colConfig.render === 'renderBooleanTag') {
-                                  displayValue = renderBooleanTag(value);
-                                } else if (colConfig.render && typeof colConfig.render === 'function') {
-                                  displayValue = colConfig.render(column);
-                                } else if (colConfig.formatter && typeof colConfig.formatter === 'function') {
-                                  // 尝试获取传入的格式化器，如果没有则使用默认的
-                                  const formatter = getFormatter(colConfig.formatter.name);
-                                  displayValue = formatter(value);
+                                if (renderer) {
+                                  displayValue = renderer(value, column, colConfig);
+                                } else if (colConfig.formatter) {
+                                  const formatter = getFormatter(colConfig.formatter);
+                                  displayValue = formatDisplayValue(formatter(value, column, colConfig));
                                 } else {
-                                  displayValue = value || '-';
+                                  displayValue = formatDisplayValue(value);
                                 }
                                 
                                 return (

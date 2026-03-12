@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -Eeuo pipefail
 
 # 目标主机地址（SSH）。
 DEPLOY_HOST="${DEPLOY_HOST:-192.168.5.239}"
@@ -11,6 +11,10 @@ DEPLOY_USER="${DEPLOY_USER:-root}"
 DEPLOY_PASS="${DEPLOY_PASS:-ruijing1}"
 # 认证模式：sshpass（默认）、interactive（交互式）、auto（自动）。
 DEPLOY_AUTH_MODE="${DEPLOY_AUTH_MODE:-sshpass}"
+# SSH 连接超时时间（秒）。
+DEPLOY_CONNECT_TIMEOUT="${DEPLOY_CONNECT_TIMEOUT:-10}"
+# 首次连接新主机时自动写入 known_hosts；如需更严格校验可改为 yes。
+DEPLOY_STRICT_HOST_KEY_CHECKING="${DEPLOY_STRICT_HOST_KEY_CHECKING:-accept-new}"
 # 设为 1 允许上传前清空远端目录；设为 0 则跳过清空。
 DEPLOY_ALLOW_DELETE="${DEPLOY_ALLOW_DELETE:-1}"
 # 设为 1 仅打印命令不执行（演练模式）；设为 0 正常执行。
@@ -30,12 +34,59 @@ log_err() {
   printf '[%s] ERROR: %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$*" >&2
 }
 
+CURRENT_COMMAND_DISPLAY=""
+
+format_cmd() {
+  local parts=()
+  local redact_next=0
+  local arg quoted
+
+  for arg in "$@"; do
+    if [[ "${redact_next}" == "1" ]]; then
+      parts+=("'******'")
+      redact_next=0
+      continue
+    fi
+
+    if [[ "${arg}" == "-p" ]]; then
+      parts+=("-p")
+      redact_next=1
+      continue
+    fi
+
+    printf -v quoted '%q' "${arg}"
+    parts+=("${quoted}")
+  done
+
+  printf '%s' "${parts[*]}"
+}
+
+on_err() {
+  local exit_code="$1"
+  local line_no="$2"
+
+  if [[ -n "${CURRENT_COMMAND_DISPLAY}" ]]; then
+    log_err "Command failed (exit=${exit_code}, line=${line_no}): ${CURRENT_COMMAND_DISPLAY}"
+  else
+    log_err "Command failed (exit=${exit_code}, line=${line_no}): ${BASH_COMMAND}"
+  fi
+}
+
+trap 'on_err "$?" "$LINENO"' ERR
+
 run() {
+  local cmd_display
+  cmd_display="$(format_cmd "$@")"
+
   if [[ "${DEPLOY_DRY_RUN}" == "1" ]]; then
-    log "DRY RUN: $*"
+    log "DRY RUN: ${cmd_display}"
     return 0
   fi
+
+  log "Running: ${cmd_display}"
+  CURRENT_COMMAND_DISPLAY="${cmd_display}"
   "$@"
+  CURRENT_COMMAND_DISPLAY=""
 }
 
 # 保护：禁止空路径或危险路径。
@@ -51,19 +102,17 @@ case "${DEPLOY_PATH}" in
     ;;
 esac
 
-log "Step 1/4: Building project (mode=test)"
-npm run build:test
-
-if [[ ! -d "dist" ]]; then
-  log_err "dist/ not found after build."
-  exit 1
-fi
-
-log "Step 2/4: Preparing SSH commands"
+log "Step 1/5: Preparing SSH commands"
 log "Deploy target: ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}"
 
-ssh_cmd=(ssh "${DEPLOY_USER}@${DEPLOY_HOST}")
-scp_cmd=(scp -r dist/* "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/")
+ssh_options=(
+  -o "StrictHostKeyChecking=${DEPLOY_STRICT_HOST_KEY_CHECKING}"
+  -o "ConnectTimeout=${DEPLOY_CONNECT_TIMEOUT}"
+  -o "ServerAliveInterval=30"
+  -o "ServerAliveCountMax=3"
+)
+ssh_cmd=(ssh "${ssh_options[@]}" "${DEPLOY_USER}@${DEPLOY_HOST}")
+scp_cmd=(scp "${ssh_options[@]}" -r dist/. "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/")
 
 auth_mode="${DEPLOY_AUTH_MODE}"
 if [[ "${auth_mode}" == "auto" ]]; then
@@ -84,12 +133,12 @@ case "${auth_mode}" in
       log_err "sshpass not found. Install it or set DEPLOY_AUTH_MODE=interactive."
       exit 1
     fi
-    log "Step 3/4: Using sshpass for non-interactive login"
-    ssh_cmd=(sshpass -p "${DEPLOY_PASS}" ssh "${DEPLOY_USER}@${DEPLOY_HOST}")
-    scp_cmd=(sshpass -p "${DEPLOY_PASS}" scp -r dist/* "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/")
+    log "Using sshpass for non-interactive login"
+    ssh_cmd=(sshpass -p "${DEPLOY_PASS}" ssh "${ssh_options[@]}" "${DEPLOY_USER}@${DEPLOY_HOST}")
+    scp_cmd=(sshpass -p "${DEPLOY_PASS}" scp "${ssh_options[@]}" -r dist/. "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/")
     ;;
   interactive)
-    log "Step 3/4: Using interactive SSH login"
+    log "Using interactive SSH login"
     ;;
   *)
     log_err "DEPLOY_AUTH_MODE must be 'sshpass', 'interactive', or 'auto'."
@@ -97,7 +146,18 @@ case "${auth_mode}" in
     ;;
 esac
 
-log "Step 4/4: Cleaning remote directory and uploading"
+log "Step 2/5: Verifying remote SSH connectivity"
+run "${ssh_cmd[@]}" "printf 'remote ssh ok\n'"
+
+log "Step 3/5: Building project (mode=test)"
+npm run build:test
+
+if [[ ! -d "dist" ]]; then
+  log_err "dist/ not found after build."
+  exit 1
+fi
+
+log "Step 4/5: Preparing remote directory"
 remote_prepare=()
 if [[ "${DEPLOY_CREATE_PATH}" == "1" ]]; then
   # 确保远端部署目录存在。
@@ -107,7 +167,12 @@ if [[ "${DEPLOY_BACKUP}" == "1" && -n "${DEPLOY_BACKUP_DIR}" ]]; then
   # 备份远端当前内容（空目录不报错）。
   ts="$(date '+%Y%m%d_%H%M%S')"
   remote_prepare+=("mkdir -p '${DEPLOY_BACKUP_DIR}'")
-  remote_prepare+=("tar -czf '${DEPLOY_BACKUP_DIR}/dist_${ts}.tgz' -C '${DEPLOY_PATH}' . || true")
+  if [[ "${DEPLOY_BACKUP_DIR}" == "${DEPLOY_PATH}/"* ]]; then
+    backup_exclude_path="${DEPLOY_BACKUP_DIR#${DEPLOY_PATH}/}"
+    remote_prepare+=("tar --exclude='./${backup_exclude_path}' -czf '${DEPLOY_BACKUP_DIR}/dist_${ts}.tgz' -C '${DEPLOY_PATH}' . || true")
+  else
+    remote_prepare+=("tar -czf '${DEPLOY_BACKUP_DIR}/dist_${ts}.tgz' -C '${DEPLOY_PATH}' . || true")
+  fi
   # 仅保留最新 5 个备份，删除更早版本。
   remote_prepare+=("ls -1t '${DEPLOY_BACKUP_DIR}'/*.tgz 2>/dev/null | tail -n +6 | xargs -r rm -f")
 fi
@@ -125,6 +190,7 @@ if [[ "${DEPLOY_ALLOW_DELETE}" == "1" ]]; then
 else
   log "Skipping remote cleanup (set DEPLOY_ALLOW_DELETE=1 to enable)"
 fi
-log "Uploading dist/ to remote"
+
+log "Step 5/5: Uploading dist/ to remote"
 run "${scp_cmd[@]}"
 log "Deploy complete"

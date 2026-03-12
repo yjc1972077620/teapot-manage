@@ -182,14 +182,19 @@ const SyncInstanceDetail = () => {
 
   // 获取数据类型文本（使用字典数据）
   const getDataTypeText = (dataType) => {
+    const normalizedDataType = dataType == null || dataType === '' ? null : Number(dataType);
+    if (normalizedDataType == null || Number.isNaN(normalizedDataType)) {
+      return dataType || '-';
+    }
+
     // 首先尝试从字典中查找
-    const dictItem = dataTypeDict.find(item => item.val === dataType);
+    const dictItem = dataTypeDict.find(item => item.val === normalizedDataType);
     if (dictItem) {
       return dictItem.key;
     }
     
     // 如果字典中没有找到，则使用原来的硬编码值
-    switch (dataType) {
+    switch (normalizedDataType) {
       case 1: return 'Integer';
       case 2: return 'Long';
       case 3: return 'String';
@@ -368,10 +373,10 @@ const SyncInstanceDetail = () => {
   };
 
   // 渲染带标签的列名
-  function renderColumnWithTags(column) {
+  function renderColumnWithTags(value, column) {
     return (
       <div className="flex items-center">
-        <span>{column.srcColumnName || '-'}</span>
+        <span>{value || '-'}</span>
         {column.primaryKey && (
           <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
             PK
