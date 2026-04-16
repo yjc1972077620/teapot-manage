@@ -360,6 +360,25 @@ const RealtimeLogPanel = ({
     () => buildSeedSnapshots(initialSnapshot, snapshotId, instanceId),
     [initialSnapshot, instanceId, snapshotId]
   );
+  const lockToSnapshotHistory = useMemo(() => {
+    if (!snapshotId) {
+      return false;
+    }
+    if (mode === 'detail') {
+      return true;
+    }
+    if (mode !== 'auto') {
+      return false;
+    }
+    if (syncResult?.includes('成功') || syncResult?.includes('失败')) {
+      return true;
+    }
+    return isChainTerminal(
+      groupSnapshots(initialSnapshots),
+      hasFailureState(initialSnapshots, syncResult),
+      expectCompensation
+    );
+  }, [expectCompensation, initialSnapshots, mode, snapshotId, syncResult]);
 
   const [snapshots, setSnapshots] = useState<EtlProgressSnapshot[]>(initialSnapshots);
   const [loading, setLoading] = useState(false);
@@ -471,26 +490,33 @@ const RealtimeLogPanel = ({
     let afterId = consoleCursorRef.current[targetSnapshotId];
     let hasMore = false;
 
-    for (let round = 0; round < MAX_CONSOLE_DRAIN_ROUNDS; round += 1) {
-      const response = await etlService.listConsoleLogs({
-        snapshotId: targetSnapshotId,
-        afterId,
-        limit: CONSOLE_PAGE_LIMIT
-      });
+    try {
+      for (let round = 0; round < MAX_CONSOLE_DRAIN_ROUNDS; round += 1) {
+        const response = await etlService.listConsoleLogs({
+          snapshotId: targetSnapshotId,
+          afterId,
+          limit: CONSOLE_PAGE_LIMIT
+        });
 
+        if (runId !== runIdRef.current) {
+          return false;
+        }
+
+        const page = response?.data;
+        const items = page?.items || [];
+        appendConsoleItems(items);
+        afterId = page?.nextAfterId ?? afterId;
+        consoleCursorRef.current[targetSnapshotId] = afterId;
+        hasMore = Boolean(page?.hasMore) && items.length > 0;
+
+        if (!drain || !hasMore) {
+          break;
+        }
+      }
+    } catch (error) {
+      console.error('Fetch console log error:', error);
       if (runId !== runIdRef.current) {
         return false;
-      }
-
-      const page = response?.data;
-      const items = page?.items || [];
-      appendConsoleItems(items);
-      afterId = page?.nextAfterId ?? afterId;
-      consoleCursorRef.current[targetSnapshotId] = afterId;
-      hasMore = Boolean(page?.hasMore) && items.length > 0;
-
-      if (!drain || !hasMore) {
-        break;
       }
     }
 
@@ -507,11 +533,16 @@ const RealtimeLogPanel = ({
         setLoading(true);
       }
 
-      const query = instanceId ? { instanceIdList: [instanceId] } : { snapshotIdList: [snapshotId!] };
-      let list = (await etlService.latestSnapshot(query))?.data || [];
+      let list: EtlProgressSnapshot[] = [];
 
-      if (list.length === 0 && snapshotId) {
+      if (lockToSnapshotHistory && snapshotId) {
         list = (await etlService.listBySnapshotIds({ snapshotIdList: [snapshotId] }))?.data || [];
+      } else {
+        const query = instanceId ? { instanceIdList: [instanceId] } : { snapshotIdList: [snapshotId!] };
+        list = (await etlService.latestSnapshot(query))?.data || [];
+        if (list.length === 0 && snapshotId) {
+          list = (await etlService.listBySnapshotIds({ snapshotIdList: [snapshotId] }))?.data || [];
+        }
       }
 
       if (runId !== runIdRef.current) {
@@ -540,7 +571,7 @@ const RealtimeLogPanel = ({
         setLoading(false);
       }
     }
-  }, [expectCompensation, instanceId, replaceSnapshots, snapshotId, syncResult]);
+  }, [expectCompensation, instanceId, lockToSnapshotHistory, replaceSnapshots, snapshotId, syncResult]);
 
   const drainConsoleHistory = useCallback(async (runId: number, sourceSnapshots?: EtlProgressSnapshot[]) => {
     const snapshotGroup = groupSnapshots(sourceSnapshots || snapshotsRef.current);
