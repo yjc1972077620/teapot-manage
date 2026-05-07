@@ -17,19 +17,6 @@ type NotificationState = {
   type: 'info' | 'success' | 'warning' | 'error';
 };
 
-const shouldExpectCompensation = (syncType?: string, logType?: number) => {
-  if (logType === 1) {
-    return true;
-  }
-  if (logType === 2) {
-    return false;
-  }
-  if (!syncType) {
-    return false;
-  }
-  return !String(syncType).toLowerCase().includes('mysql');
-};
-
 const LogDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -100,7 +87,6 @@ const LogDetail = () => {
   const syncResultValue = log?.syncResult != null ? log.syncResult : undefined;
   const logTypeValue = log?.logType;
   const logTypeLabel = logTypeValue === 0 ? '全量日志' : logTypeValue === 1 ? '补偿日志' : logTypeValue === 2 ? '断点日志' : '未知日志';
-  const expectCompensation = shouldExpectCompensation(syncTypeValue, logTypeValue);
   return (
     <div className="px-6 pb-6 pt-4 space-y-6 bg-gray-50 min-h-screen">
       <Card bordered={false} className="shadow-sm">
@@ -190,7 +176,6 @@ const LogDetail = () => {
 
           <div ref={consoleRef}>
             <RealtimeLogPanel
-              expectCompensation={expectCompensation}
               instanceId={log.syncInstanceId}
               snapshotId={log.snapshotId}
               initialSnapshot={snapshotData}

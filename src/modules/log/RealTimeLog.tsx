@@ -4,20 +4,6 @@ import { Button, Card, Tag } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import RealtimeLogPanel from './components/RealtimeLogPanel';
 
-const shouldExpectCompensation = (syncType?: number | string) => {
-  if (syncType == null || syncType === '') {
-    return false;
-  }
-  if (typeof syncType === 'number') {
-    return syncType !== 1;
-  }
-  const normalized = String(syncType).toLowerCase();
-  if (normalized === '1') {
-    return false;
-  }
-  return !normalized.includes('mysql');
-};
-
 const RealTimeLog = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,7 +13,6 @@ const RealTimeLog = () => {
   const instanceId = id ? Number.parseInt(id, 10) : undefined;
   const locationState = location.state as { instanceName?: string; syncType?: number | string } | undefined;
   const instanceName = locationState?.instanceName;
-  const expectCompensation = shouldExpectCompensation(locationState?.syncType);
 
   const handleBack = () => {
     navigate(-1);
@@ -51,7 +36,6 @@ const RealTimeLog = () => {
       </Card>
 
       <RealtimeLogPanel
-        expectCompensation={expectCompensation}
         instanceId={instanceId}
         snapshotId={snapshotId}
         mode="realtime"

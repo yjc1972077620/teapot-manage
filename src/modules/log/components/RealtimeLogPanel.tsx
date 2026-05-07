@@ -11,7 +11,6 @@ import etlService from '../../../services/server/etl/etlService';
 import type { EtlConsoleLogItem, EtlProgressSnapshot } from '../../../types/server/etl/etlType';
 
 type RealtimeLogPanelProps = {
-  expectCompensation?: boolean;
   initialSnapshot?: EtlProgressSnapshot | null;
   instanceId?: number;
   mode?: 'realtime' | 'detail' | 'auto';
@@ -62,6 +61,7 @@ type MetricSummary = {
 };
 
 const POLL_INTERVAL_MS = 1200;
+const COMPENSATION_WAIT_WINDOW_MS = 15000;
 const CONSOLE_PAGE_LIMIT = 200;
 const MAX_CONSOLE_DRAIN_ROUNDS = 50;
 
@@ -180,24 +180,10 @@ const detectLevel = (line: string): LogLine['level'] => {
 const hasFailureState = (list: EtlProgressSnapshot[], syncResult?: string) =>
   list.some(item => item.phase === 'FAILED') || Boolean(syncResult?.includes('失败'));
 
-const shouldWaitForCompensation = (
-  snapshotGroup: SnapshotGroup,
-  expectCompensation: boolean,
-  hasFailure: boolean
-) => {
-  if (!expectCompensation || hasFailure) {
-    return false;
-  }
-  if (snapshotGroup.breakpointSnapshot || snapshotGroup.compSnapshot) {
-    return false;
-  }
-  return Boolean(snapshotGroup.mainSnapshot?.logType === 0 && snapshotGroup.mainSnapshot?.syncFinished);
-};
-
 const isChainTerminal = (
   snapshotGroup: SnapshotGroup,
   hasFailure: boolean,
-  expectCompensation: boolean
+  compensationWaitActive: boolean
 ) => {
   if (hasFailure) {
     return true;
@@ -214,7 +200,7 @@ const isChainTerminal = (
   if (!snapshotGroup.mainSnapshot.syncFinished) {
     return false;
   }
-  return !shouldWaitForCompensation(snapshotGroup, expectCompensation, hasFailure);
+  return !compensationWaitActive;
 };
 
 const buildStepFlow = (snapshotGroup: SnapshotGroup, hasFailure: boolean) => {
@@ -348,7 +334,6 @@ const MetricsCard = ({
 );
 
 const RealtimeLogPanel = ({
-  expectCompensation = false,
   instanceId,
   snapshotId,
   initialSnapshot,
@@ -370,15 +355,8 @@ const RealtimeLogPanel = ({
     if (mode !== 'auto') {
       return false;
     }
-    if (syncResult?.includes('成功') || syncResult?.includes('失败')) {
-      return true;
-    }
-    return isChainTerminal(
-      groupSnapshots(initialSnapshots),
-      hasFailureState(initialSnapshots, syncResult),
-      expectCompensation
-    );
-  }, [expectCompensation, initialSnapshots, mode, snapshotId, syncResult]);
+    return Boolean(syncResult?.includes('成功') || syncResult?.includes('失败'));
+  }, [mode, snapshotId, syncResult]);
 
   const [snapshots, setSnapshots] = useState<EtlProgressSnapshot[]>(initialSnapshots);
   const [loading, setLoading] = useState(false);
@@ -390,6 +368,7 @@ const RealtimeLogPanel = ({
 
   const logContainerRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const compensationWaitStartedAtRef = useRef<number | null>(null);
   const lineIdRef = useRef(0);
   const runIdRef = useRef(0);
   const snapshotsRef = useRef<EtlProgressSnapshot[]>(initialSnapshots);
@@ -462,6 +441,7 @@ const RealtimeLogPanel = ({
   const resetPanelState = useCallback(() => {
     clearScheduledPoll();
     runIdRef.current += 1;
+    compensationWaitStartedAtRef.current = null;
     lineIdRef.current = 0;
     consoleCursorRef.current = {};
     currentConsoleSnapshotIdRef.current = undefined;
@@ -485,6 +465,45 @@ const RealtimeLogPanel = ({
     setLiveMode(startLive);
     return runIdRef.current;
   }, [clearScheduledPoll, initialSnapshot, instanceId, mode, snapshotId]);
+
+  const resolveCompensationWaitActive = useCallback((snapshotGroup: SnapshotGroup, hasFailure: boolean) => {
+    if (mode !== 'realtime' || hasFailure) {
+      compensationWaitStartedAtRef.current = null;
+      return false;
+    }
+    const eligible = Boolean(
+      !snapshotGroup.breakpointSnapshot
+      && !snapshotGroup.compSnapshot
+      && snapshotGroup.mainSnapshot?.logType === 0
+      && snapshotGroup.mainSnapshot?.syncFinished
+    );
+    if (!eligible) {
+      compensationWaitStartedAtRef.current = null;
+      return false;
+    }
+    const now = Date.now();
+    if (compensationWaitStartedAtRef.current == null) {
+      compensationWaitStartedAtRef.current = now;
+    }
+    if (now - compensationWaitStartedAtRef.current < COMPENSATION_WAIT_WINDOW_MS) {
+      return true;
+    }
+    compensationWaitStartedAtRef.current = null;
+    return false;
+  }, [mode]);
+
+  const readCompensationWaitActive = useCallback((snapshotGroup: SnapshotGroup, hasFailure: boolean) => {
+    if (mode !== 'realtime' || hasFailure) {
+      return false;
+    }
+    return Boolean(
+      compensationWaitStartedAtRef.current != null
+      && !snapshotGroup.breakpointSnapshot
+      && !snapshotGroup.compSnapshot
+      && snapshotGroup.mainSnapshot?.logType === 0
+      && snapshotGroup.mainSnapshot?.syncFinished
+    );
+  }, [mode]);
 
   const fetchConsoleStream = useCallback(async (runId: number, targetSnapshotId: string, drain = false) => {
     let afterId = consoleCursorRef.current[targetSnapshotId];
@@ -555,10 +574,12 @@ const RealtimeLogPanel = ({
       }
 
       const nextSnapshotGroup = groupSnapshots(nextSnapshots);
+      const hasFailure = hasFailureState(nextSnapshots, syncResult);
+      const compensationWaitActive = resolveCompensationWaitActive(nextSnapshotGroup, hasFailure);
       const finished = isChainTerminal(
         nextSnapshotGroup,
-        hasFailureState(nextSnapshots, syncResult),
-        expectCompensation
+        hasFailure,
+        compensationWaitActive
       );
       summaryFinishedRef.current = finished;
 
@@ -571,7 +592,7 @@ const RealtimeLogPanel = ({
         setLoading(false);
       }
     }
-  }, [expectCompensation, instanceId, lockToSnapshotHistory, replaceSnapshots, snapshotId, syncResult]);
+  }, [instanceId, lockToSnapshotHistory, replaceSnapshots, resolveCompensationWaitActive, snapshotId, syncResult]);
 
   const drainConsoleHistory = useCallback(async (runId: number, sourceSnapshots?: EtlProgressSnapshot[]) => {
     const snapshotGroup = groupSnapshots(sourceSnapshots || snapshotsRef.current);
@@ -658,7 +679,7 @@ const RealtimeLogPanel = ({
       const finished = isChainTerminal(
         groupSnapshots(nextSnapshots),
         hasFailureState(nextSnapshots, syncResult),
-        expectCompensation
+        readCompensationWaitActive(groupSnapshots(nextSnapshots), hasFailureState(nextSnapshots, syncResult))
       );
 
       if (mode === 'auto' && finished) {
@@ -694,7 +715,6 @@ const RealtimeLogPanel = ({
   }, [
     clearScheduledPoll,
     drainConsoleHistory,
-    expectCompensation,
     fetchSnapshotSummary,
     initialSnapshot,
     instanceId,
@@ -752,9 +772,13 @@ const RealtimeLogPanel = ({
   const currentPercent = useMemo(() => calcPercent(currentMetrics), [currentMetrics]);
   const overallPercent = useMemo(() => calcPercent(overallMetrics), [overallMetrics]);
   const hasFailure = useMemo(() => hasFailureState(snapshots, syncResult), [snapshots, syncResult]);
+  const compensationWaitActive = useMemo(
+    () => readCompensationWaitActive(snapshotGroup, hasFailure),
+    [hasFailure, pollTick, readCompensationWaitActive, snapshotGroup]
+  );
   const chainFinished = useMemo(
-    () => isChainTerminal(snapshotGroup, hasFailure, expectCompensation),
-    [expectCompensation, hasFailure, snapshotGroup]
+    () => isChainTerminal(snapshotGroup, hasFailure, compensationWaitActive),
+    [compensationWaitActive, hasFailure, snapshotGroup]
   );
   const allFinished = useMemo(
     () => snapshots.length > 0 && snapshots.every(snapshot => snapshot.syncFinished),
